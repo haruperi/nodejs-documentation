@@ -264,3 +264,34 @@ npm install
 To install/uninstall packages globally, use -g flag.
 
 
+#RESTful API
+REST stands for REpresentational State Transfer. REST is web standards based architecture and uses HTTP Protocol.
+Following four HTTP methods are commonly used in REST based architecture.
+- GET − This is used to provide a read only access to a resource.
+- PUT − This is used to create a new resource.
+- DELETE − This is used to remove a resource.
+- POST − This is used to update a existing resource or create a new resource.
+
+Express is a simple, minimalistic and lightweight framework for building web
+servers.
+```
+npm install express
+```
+We use Nodemon to watch for changes in files and automatically restart the
+node process.
+```
+npm install -g nodemon
+```
+You should never trust data sent by the client. Always validate! Use Joi package
+  to perform input validation.
+```
+npm install joi
+
+//OR 
+
+npm install joi@13.1.0   
+```
+
+We can use environment variables to store various settings for an application. To
+read an environment variable, we use ```process.env.PORT``` for dynamic port
+
