@@ -1,4 +1,4 @@
-#Getting Started with Node
+# Getting Started with Node
 - Node is a runtime environment for executing JS code.
 - Essentially, Node is a C++ program that embeds Chrome’s v8 engine, the fastest
   JS engine in the world.
@@ -19,15 +19,15 @@
   browsers, such as objects for working with the file system, network, operating
   system, etc.
 
-###Download Node.js
+### Download Node.js
 The official Node.js website has installation instructions for Node.js: https://nodejs.org
 
-#Node Module System
+# Node Module System
 Modules are JavaScript libraries.
 A set of functions you want to include in your application.
 
 
-###Global Objects
+### Global Objects
 - We don’t have the window object in Node.
 - The global object in Node is “global”.
 - Unlike browser applications, variables we define are not added to the “global”
@@ -40,7 +40,7 @@ setInterval()
 clearInterval()
 ```
 
-###Module Wrapper Function
+### Module Wrapper Function
 - Node.js treats each JavaScript file as a separate module ```(xyz.js => xyz)``` <br>
 - Node automatically wraps the code
   in each file with an IIFE (Immediately-invoked Function Expression) to create
@@ -77,7 +77,7 @@ console.log("The date and time are currently: " + dt.myDateTime());
 
 
 
-##Built-in Modules
+## Built-in Modules
 Node.js has a set of built-in modules which you can use without any further installation and enable us to work with the file system, path
 objects, network, operating system, etc.<br>
 
@@ -113,7 +113,7 @@ vm	|To compile JavaScript code in a virtual machine
 zlib	|To compress or decompress files
 
 
-###HTTP Module
+### HTTP Module
 Node.js has a built-in module called HTTP, which allows Node.js to transfer data over the Hyper Text Transfer Protocol (HTTP).<br>
 ```js
 const http = require('http')
@@ -126,13 +126,13 @@ res.writeHead(200, {'Content-Type': 'text/html'});
  res.end();
 }} 
 ```
-###Path Module
+### Path Module
 ```js
 const path = require('path');
 const pathObj = path.parse(__filename);
 console.log(pathObj);
 ```
-###URL Module
+### URL Module
 The URL module splits up a web address into readable parts.
 ```js
 const url = require('url')
@@ -148,7 +148,7 @@ const qdata = q.query; //returns an object: { year: 2017, month: 'february' }
 console.log(qdata.month); //=> 'february'
 ```
 
-###File Module
+### File Module
 The Node.js file system module allows you to work with the file system on your computer.
 
 ```js
@@ -160,13 +160,13 @@ fs.writeFile('mynewfile3.txt', 'Hello content!')
 fs.unlink('mynewfile2.txt')
 fs.rename('mynewfile1.txt', 'myrenamedfile.txt')
 ```
-###OS  Module
+### OS  Module
 ```js
 const os = require('os');
 const totalMemory = os.totalmem();
 const freeMemory = os.freemem();
 ```
-###Events  Module
+### Events  Module
 Every action on a computer is an event. Like when a connection is made or a file is opened.
 Node.js has a built-in module, called "Events", where you can create-, fire-, and listen for- your own events
 EventEmitter is one of the core classes in Node that allows us to raise (emit) and
@@ -264,7 +264,7 @@ npm install
 To install/uninstall packages globally, use -g flag.
 
 
-#RESTful API
+# RESTful API
 REST stands for REpresentational State Transfer. REST is web standards based architecture and uses HTTP Protocol.
 Following four HTTP methods are commonly used in REST based architecture.
 - GET − This is used to provide a read only access to a resource.
