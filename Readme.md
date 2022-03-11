@@ -295,3 +295,99 @@ npm install joi@13.1.0
 We can use environment variables to store various settings for an application. To
 read an environment variable, we use ```process.env.PORT``` for dynamic port
 
+### RESTful API using Express templates
+Check the restful-api.js file in this folder
+
+## Middleware
+- A middleware function is a function that takes a request object and either
+  terminates the request/response cycle or passes control to another middleware
+  function.
+- Express has a few built-in middleware functions:
+- **json()**: to parse the body of requests with a JSON payload
+- **urlencoded()**: to parse the body of requests with URL-encoded payload
+- **static()**: to serve static files
+```js
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
+```
+
+You can create custom middleware for cross-cutting concerns, such as logging,
+  authentication, etc.
+
+#### Custom middleware (applied on all routes)
+```js
+app.use(function(req, res, next) {
+// …
+next();
+})
+```
+
+#### Custom middleware (applied on routes starting with /api/admin)
+```js
+app.use('/api/admin', function(req, res, next) {
+// …
+next();
+})
+```
+
+We can detect the environment in which our Node application is running
+(development, production, etc) using **process.env.NODE_ENV** and
+**app.get('env')**.
+
+Enabling or disabling certain things under different environments
+
+```js
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny'))
+  console.log("Morgan Enabled")
+}
+```
+
+#### NPM Config for different env
+The ```config``` package gives us an elegant way to store configuration settings for
+our applications.
+```
+nmp install config
+```
+
+#### NPM debug for debugging
+We can use the ```debug``` package to add debugging information to an application.
+Prefer this approach to ```console.log()``` statements.
+```
+nmp install debug
+```
+
+#### Templating Engines
+To return HTML markup to the client, use a templating engine. There are various
+templating engines available out there. Pug, EJS and Mustache are the most
+popular ones.
+```
+nmp install pug
+```
+
+
+## Structuring Express Applications
+Set out two main folders on the root level: <br>
+**src** houses the source code, <br>
+**test** has all the testing code in it
+
+### src folder
+**configs** folder, which keeps all the configs needed for the application e.g database name and username and other generic configs
+
+**controllers** folder, which will house all the controllers needed for the application. These controller methods get the request from the routes and convert them to HTTP responses with the use of any middleware as necessary.
+
+**middlewares** folder will segregate any middleware needed for the application in one place. There can be middleware for authentication, logging, or any other purpose.
+
+**routes** folder that will have a single file for each logical set of routes. 
+
+**models** folder will have data models required for the application. This will also depend on the datastore used if it is a relational or a non-relational (NoSQL) database
+
+**services** folder will include all the business logic. It can have services that represent business objects and can run queries on the database. Depending on the need, even general services like a database can be placed here
+
+**utils** directory that will have all the utilities and helpers needed for the application.
+
+### test folder
+The **test** folder has subfolders like **unit** and integration for unit and integration tests.
+
+The **unit** folder inside the **test** folder will have a structure similar to the **src** folder, as each file in the **src** folder will need a test, and it is best to follow the same structure
