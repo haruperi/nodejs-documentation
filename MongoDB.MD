@@ -147,7 +147,23 @@ returns documents where skills contains "Tax" and "Accounting"
 Use the projection parameter to specify the fields to be included in the result. The projection parameter format is `{<field>: <1 or true>, <field>: <1 or true>...}` where 1 or true includes the field, and o or false excludes the field in the result.
 `db.employees.find({salary: 7000}, {firstName:1, lastName:1})`
 
+`db.employees.find( { quantity: { $gte: 20 , $lte: 30 } } )`  Comparison
 
+`db.employees.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )`  logical
+
+`db.employees.find({ author: 'Rufaro', isPublished: true })`
+
+Regex
+```js
+    //starts with Rufaro
+    db.employees.find({author: /^Rufaro/})
+    
+    //Ends with Rufaro
+    db.employees.find({author: /Rufaro$/})
+
+    //Contains with Rufaro
+    db.employees.find({author: /.*Rufaro.*/})
+```
 
 
 
@@ -157,7 +173,7 @@ The following example gets the cursor object and assign it to a variable.
 
 `const cursor = db.employees.find()`
 
-```
+```js
 cursor.count()
 cursor.forEach()
 cursor.hasNext()
@@ -170,9 +186,15 @@ cursor.min()
 cursor.next()
 cursor.pretty()
 cursor.readConcern()
-cursor.skip()
-cursor.sort()
+
 cursor.toArray()
+cursor.skip()
+cursor.skip(pageNumber-1*pageSize)   //pagination
+cursor.limit(pageSize)  //pagination
+cursor.sort()
+cursor.sort({ name: 1 })
+cursor.select({ name: 1 })
+
 ```
 
 ## Update Single Document
@@ -268,6 +290,57 @@ $pullAll
 `db.employees.deleteOne({ salary:7000 }) `
 
 `db.employees.deleteMany({ salary:7000 }) `
+
+## Data Validation
+When defining a schema, you can set the type of a property to a SchemaType
+object. You use this object to define the validation requirements for the given
+property.
+
+Adding validation
+```js
+new mongoose.Schema({
+name: { type: String, required: true }
+})
+```
+
+Validation logic is executed by Mongoose prior to saving a document to the
+database. You can also trigger it manually by calling the ```validate()``` method.
+- Built-in validators:
+- Strings: **minlength, maxlength, match, enum, lowercase, uppercase, trim**
+- Numbers: **min, max**
+- Dates: **min, max**
+- All types: **required, get, set (to define a custom getter/setter)**
+
+```js
+price: {
+    type: Number,
+        get: v => Math.round(v),
+        set: v => Math.round(v)
+}
+```
+
+Custom validation
+```js
+tags: [
+type: Array,
+validate: {
+validator: function(v) { return v && v.length > 0; },
+message: 'A course should have at least 1 tag.'
+}
+]
+```
+
+If you need to talk to a database or a remote service to perform the validation,
+you need to create an async validator:
+```js
+validate: {
+isAsync: true
+validator: function(v, callback) {
+// Do the validation, when the result is ready, call the callback
+callback(isValid);
+}
+}
+```
 
 ## Relations in MongoDB
 In MongoDB, one-to-one, one-to-many, and many-to-many relations can be implemented in two ways:
